@@ -1,0 +1,22 @@
+title Sequence of submitting form on /spa
+
+User->Browser: Submitting form
+note left of Browser
+  User types something and
+  clicks the submit button.
+end note
+note right of Browser
+  JS prevents default action of for submit button, 
+  instead creating an object with form body and
+  date. The object is pushed to notes array. The
+  redrawNotes function re-defines the UL element.
+  Finally, sendToServer function is called to
+  push the changes to server.
+end note
+Browser->Server: POST /new_note_spa, JSON
+note left of Server
+  JS posts the new note object to server as JSON.
+end notes
+Server->Browser: Status 201, JSON
+note left of Server: Server returns a message, having saved the note.
+note left of Browser: HTML is continuously updated.

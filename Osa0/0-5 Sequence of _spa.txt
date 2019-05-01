@@ -1,0 +1,22 @@
+title Sequence of /spa
+
+User->Browser: Browsing to URL
+note left of Browser: User browses to /spa
+Browser->Server: GET fullstack-exampleapp.herokuapp.com/spa
+Server->Browser: Status 200, HTML
+Browser->Server: GET main.css
+Browser->Server: GET spa.js
+Server->Browser: Status 200, CSS
+Server->Browser: Status 200, JS
+note right of Browser: JS requests GET of /data.json
+Browser->Server: GET data.json
+Server->Browser: Status 200, JSON
+note right of Browser
+  JS parses the JSON response and calls redrawNotes
+  function. It creates an UL element of class "notes"
+  and populates the list with JSON contents.
+end note
+Browser->User: Render HTML
+note left of Browser
+  The HTML is rendered to the user.
+end note

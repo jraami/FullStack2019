@@ -1,0 +1,21 @@
+title Submitting form on /notes
+
+User->Browser: Submitting form
+note left of Browser
+  User types something and
+  clicks the submit button.
+end note
+Browser->Server: POST /new_form
+note left of Server
+  Browser posts form contents to server. Server
+  pushes the note and date to object "notes"
+end notes
+Server->Browser: Status 302, HTML
+note left of Server: Server redirects browser to load /notes.
+Browser->Server: GET /notes
+note left of Server
+  Browser loads /notes again, displaying the new
+  note through main.js appended to the list.
+end note
+Server->Browser: Status 200, HTML
+Browser->User: Rendering HTML
