@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
         case 'NEW_ANECDOTE':
             console.log('new', action.data)
             const newAnecdote = asObject(action.data.content)
-            console.log('new anecdote: ' + action.data.content)
+            console.log(newAnecdote)
             return {
                 anecdotes: [...state.anecdotes, newAnecdote]
             }
