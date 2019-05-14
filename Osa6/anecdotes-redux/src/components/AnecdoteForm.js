@@ -1,21 +1,19 @@
 import React from 'react'
 import actionFor from '../actionCreators'
+import { setNotification } from './Notification'
 
 const AnecdoteForm = ({ store }) => {
 
     const newAnecdoteHandler = (event) => {
         event.preventDefault()
-        console.log(store)
-        console.log('anecdote handler event: ' + event)
         const content = event.target.anecdoteInput.value
-        console.log('app.js creating new: ' + content)
         store.dispatch(actionFor.anecdoteCreation(content))
-        console.log(store.anecdotes)
+        setNotification(store, 'Anecdote created', 'notification_success')
         event.target.anecdoteInput.value = ''
     }
+
     return (
         <div>
-            {console.log(store)}
             <h2>Create new</h2>
             <form onSubmit={newAnecdoteHandler}>
                 <div><input name='anecdoteInput' /></div>
