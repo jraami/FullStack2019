@@ -5,9 +5,7 @@ import Filter, { filterAnecdotes } from './Filter'
 import { setNotification } from './Notification'
 
 const AnecdoteList = ({ store }) => {
-    const storeNow = store.getState()
-
-    const filteredAnecdotes = filterAnecdotes(store.getState().filterString, store.getState().anecdotes)
+    const filteredAnecdotes = filterAnecdotes(store.getState().filter.filterString, store.getState().anecdotes)
 
     const voteHandler = (value) => (event) => {
         console.log('like handler event' + event)
@@ -20,6 +18,7 @@ const AnecdoteList = ({ store }) => {
         <div>
             <h2>Anecdotes</h2>
             <ul>
+                {console.log(filteredAnecdotes)}
                 {filteredAnecdotes.map((anecdote) =>
                     <Anecdote key={anecdote.id} anecdote={anecdote} handleClick={voteHandler(anecdote.id)} />
                 )}

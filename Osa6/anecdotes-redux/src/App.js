@@ -8,7 +8,6 @@ const App = (props) => {
 
     return (
         <div className='anecdotes'>
-            {console.log(props)}
             <Notification store={props.store} />
             <AnecdoteList store={props.store} />
             <AnecdoteForm store={props.store} />

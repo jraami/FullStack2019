@@ -1,7 +1,6 @@
 import React from 'react';
 import actionFor from '../actionCreators'
 
-
 export const setNotification = (store, message, displayStyle) => {
     console.log(store)
     store.dispatch(actionFor.setNotification(message, displayStyle))

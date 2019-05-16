@@ -17,35 +17,31 @@ const asObject = (anecdote) => {
     }
 }
 
-const initialState = {
-    anecdotes: anecdotesAtStart.map(asObject),
-    //    notification: {
-    //        message: '',
-    //        displayStyle: 'notification_none'
-    //    }
-}
+const initialState = anecdotesAtStart.map(asObject)
+//    notification: {
+//        message: '',
+//        displayStyle: 'notification_none'
+//    }
+
 
 const anecdoteReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case 'NEW_ANECDOTE':
-            const newAnecdote = asObject(action.data.content)
-            return {
-                anecdotes: [...state.anecdotes, newAnecdote]
-            }
+            const concetanedList = state.concat(asObject(action.data.content))
+            console.log(concetanedList)
+            return concetanedList
 
         case 'VOTE':
             const id = action.data.id
-            const anecdoteToChange = state.anecdotes.find(n => n.id === id)
+            const anecdoteToChange = state.find(n => n.id === id)
             const anecdote = {
                 ...anecdoteToChange,
                 votes: anecdoteToChange.votes + 1
             }
-            const newState = {
-                ...state,
-                anecdotes: state.anecdotes.map(entry => entry.id !== id ? entry : anecdote)
-            }
-            return (newState)
+            const newState = state.map(entry => entry.id !== id ? entry : anecdote)
+
+            return newState
 
         case 'SORT':
             const sortByVotes = (listToBeSorted) => {
@@ -56,32 +52,10 @@ const anecdoteReducer = (state = initialState, action) => {
                 })
                 return sortedList
             }
-            const sortedAnecdotes = {
-                anecdotes: sortByVotes(state.anecdotes),
-                //                visibleAnecdotes: sortByVotes(state.visibleAnecdotes)
-            }
-            return { ...state, sortedAnecdotes }
+            const sortedAnecdotes = sortByVotes(state)
+            //                visibleAnecdotes: sortByVotes(state.visibleAnecdotes)
 
-
-        case 'FILTER':
-            return {
-                ...state,
-                filterString: action.data.filterString
-                /*
-                anecdotes: state.anecdotes.filter(anecdote => {
-                    const content = anecdote.content.toLowerCase()
-                    const filter = action.data.filterString.toLowerCase()
-                    return content.includes(filter)
-                })*/
-            }
-
-        /*
-                entriesToShow: this.state.phonebook.filter(entry => {
-                    const entryInLowercase = entry.name.toLowerCase()
-                    const filter = event.target.value.toLowerCase()
-                    return entryInLowercase.includes(filter)
-                })
-                */
+            return sortedAnecdotes
 
         default:
             return state
