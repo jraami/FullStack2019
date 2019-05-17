@@ -3,15 +3,14 @@ import Notification from './components/Notification'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 
-const App = (props) => {
-    const store = props.store
-
+const App = () => {
     return (
-        <div className='anecdotes'>
-            <Notification store={props.store} />
-            <AnecdoteList store={props.store} />
-            <AnecdoteForm store={props.store} />
+        <div>
+            <Notification />
+            <AnecdoteList />
+            <AnecdoteForm />
         </div>
     )
 }
+
 export default App

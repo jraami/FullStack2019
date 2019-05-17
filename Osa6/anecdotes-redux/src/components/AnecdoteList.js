@@ -1,17 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Anecdote from './Anecdote'
-import actionFor from '../actionCreators'
 import Filter, { filterAnecdotes } from './Filter'
-import { setNotification } from './Notification'
+import { makeNotification } from './Notification'
+import { vote, sort } from '../reducers/anecdotereducer'
 
-const AnecdoteList = ({ store }) => {
-    const filteredAnecdotes = filterAnecdotes(store.getState().filter.filterString, store.getState().anecdotes)
+const AnecdoteList = (props) => {
+    const filteredAnecdotes = filterAnecdotes(props.filter.filterString, props.anecdotes)
 
     const voteHandler = (value) => (event) => {
         console.log('like handler event' + event)
-        store.dispatch(actionFor.vote(value))
-        store.dispatch(actionFor.sort())
-        setNotification(store, 'Voted', 'notification_success')
+        props.vote(value)
+        props.sort()
+        makeNotification('Voted', 'notification_success')
     }
 
     return (
@@ -24,9 +25,23 @@ const AnecdoteList = ({ store }) => {
                 )}
             </ul>
             <h3>Filter</h3>
-            <Filter store={store} />
+            <Filter store={props.store} />
         </div>
     )
 }
 
-export default AnecdoteList
+
+const mapStateToProps = (state) => {
+    return {
+        anecdotes: state.anecdotes,
+        filter: state.filter,
+        notification: state.notification
+    }
+}
+
+const mapDispatchToProps = {
+    vote,
+    sort,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)

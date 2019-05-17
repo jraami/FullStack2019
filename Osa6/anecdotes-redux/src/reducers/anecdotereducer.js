@@ -28,9 +28,9 @@ const anecdoteReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case 'NEW_ANECDOTE':
-            const concetanedList = state.concat(asObject(action.data.content))
-            console.log(concetanedList)
-            return concetanedList
+            const concatenatedList = state.concat(asObject(action.data.content))
+            console.log(concatenatedList)
+            return concatenatedList
 
         case 'VOTE':
             const id = action.data.id

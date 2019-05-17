@@ -1,5 +1,6 @@
 import React from 'react'
-import actionFor from '../actionCreators'
+import { connect } from 'react-redux'
+import { filterList } from '../reducers/filterreducer'
 
 export const filterAnecdotes = (filterString, filterList) => {
     if (filterString) {
@@ -16,9 +17,9 @@ export const filterAnecdotes = (filterString, filterList) => {
     }
 }
 
-const Filter = ({ store }) => {
+const Filter = (props) => {
     const handleChange = (event) => {
-        store.dispatch(actionFor.filterList(event.target.value))
+        props.filterList(event.target.value)
     }
 
     return (
@@ -28,4 +29,14 @@ const Filter = ({ store }) => {
     )
 }
 
-export default Filter
+const mapStateToProps = (state) => {
+    return {
+        filter: state.filter,
+    }
+}
+
+const mapDispatchToProps = {
+    filterList,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter)

@@ -1,14 +1,15 @@
 import React from 'react'
-import actionFor from '../actionCreators'
-import { setNotification } from './Notification'
+import { connect } from 'react-redux'
+import { anecdoteCreation } from '../reducers/anecdotereducer'
+import { makeNotification } from './Notification'
 
-const AnecdoteForm = ({ store }) => {
+const AnecdoteForm = (props) => {
 
     const newAnecdoteHandler = (event) => {
         event.preventDefault()
         const content = event.target.anecdoteInput.value
-        store.dispatch(actionFor.anecdoteCreation(content))
-        setNotification(store, 'Anecdote created', 'notification_success')
+        props.anecdoteCreation(content)
+        makeNotification('Anecdote created', 'notification_success')
         event.target.anecdoteInput.value = ''
     }
 
@@ -22,4 +23,13 @@ const AnecdoteForm = ({ store }) => {
         </div>
     )
 }
-export default AnecdoteForm
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+const mapDispatchToProps = {
+    anecdoteCreation,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteForm)

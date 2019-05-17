@@ -5,8 +5,9 @@ const initialState = {
     }
 }
 
-const noteReducer = (state = initialState, action) => {
+const notificationReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case 'NOTIFICATION':
             console.log(action.data.notification)
             const notification = action.data.notification
@@ -43,5 +44,5 @@ export const resetNotification = () => {
     }
 }
 
-export default noteReducer
+export default notificationReducer
 
