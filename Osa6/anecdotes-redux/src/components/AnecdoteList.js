@@ -15,14 +15,28 @@ const AnecdoteList = (props) => {
         makeNotification('Voted', 'notification_success')
     }
 
+    const mapAnecdotes = (anecdoteList) => {
+        if (anecdoteList.length === 0) {
+            return (
+                <div>
+                    There are no entries that contain that filter string.
+                </div>)
+        }
+        else {
+            return (
+                anecdoteList.map((anecdote) =>
+                    <Anecdote key={anecdote.id} anecdote={anecdote} handleClick={voteHandler(anecdote.id)} />
+                )
+            )
+        }
+    }
+
     return (
         <div>
             <h2>Anecdotes</h2>
             <ul>
                 {console.log(filteredAnecdotes)}
-                {filteredAnecdotes.map((anecdote) =>
-                    <Anecdote key={anecdote.id} anecdote={anecdote} handleClick={voteHandler(anecdote.id)} />
-                )}
+                {mapAnecdotes(filteredAnecdotes)}
             </ul>
             <h3>Filter</h3>
             <Filter store={props.store} />
