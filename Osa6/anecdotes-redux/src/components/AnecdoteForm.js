@@ -9,11 +9,8 @@ const AnecdoteForm = (props) => {
     const newAnecdoteHandler = async (event) => {
         event.preventDefault()
         const content = event.target.anecdoteInput.value
-        console.log(content)
         event.target.anecdoteInput.value = ''
-        const newAnecdote = await anecdoteService.createNew(content)
-        console.log(newAnecdote)
-        props.anecdoteCreation(newAnecdote)
+        props.anecdoteCreation(content)
         makeNotification('Anecdote created', 'notification_success')
 
     }
@@ -28,6 +25,7 @@ const AnecdoteForm = (props) => {
         </div>
     )
 }
+
 const mapStateToProps = (state) => {
     return {
     }
