@@ -10,11 +10,21 @@ const asObject = (anecdote) => {
     }
 }
 
+const sortByVotes = (listToBeSorted) => {
+    const sortedList = listToBeSorted.sort((a, b) => {
+        if (a.votes < b.votes) return 1
+        if (a.votes > b.votes) return -1
+        return 0
+    })
+    return sortedList
+}
+
 const anecdoteReducer = (state = [], action) => {
     switch (action.type) {
 
         case 'INIT_ANECDOTES':
-            return action.data
+            const initializedAnecdotes = sortByVotes(action.data)
+            return initializedAnecdotes
 
         case 'NEW_ANECDOTE':
             const concatenatedList = state.concat(asObject(action.data.content))
@@ -30,21 +40,7 @@ const anecdoteReducer = (state = [], action) => {
             }
             const newState = state.map(entry => entry.id !== id ? entry : anecdote)
 
-            return newState
-
-        case 'SORT':
-            const sortByVotes = (listToBeSorted) => {
-                const sortedList = listToBeSorted.sort((a, b) => {
-                    if (a.votes < b.votes) return 1
-                    if (a.votes > b.votes) return -1
-                    return 0
-                })
-                return sortedList
-            }
-            const sortedAnecdotes = sortByVotes(state)
-            //                visibleAnecdotes: sortByVotes(state.visibleAnecdotes)
-
-            return sortedAnecdotes
+            return sortByVotes(newState)
 
         default:
             return state
@@ -75,16 +71,13 @@ export const anecdoteCreation = content => {
     }
 }
 
-export const vote = (id) => {
-    return {
-        type: 'VOTE',
-        data: { id }
-    }
-}
-
-export const sort = () => {
-    return {
-        type: 'SORT'
+export const vote = id => {
+    return async dispatch => {
+        const votedAnecdote = await anecdoteService.vote(id)
+        dispatch({
+            type: 'VOTE',
+            data: { id }
+        })
     }
 }
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Anecdote from './Anecdote'
 import Filter, { filterAnecdotes } from './Filter'
 import { makeNotification } from './Notification'
-import { vote, sort } from '../reducers/anecdotereducer'
+import { vote } from '../reducers/anecdotereducer'
 
 const AnecdoteList = (props) => {
     const filteredAnecdotes = filterAnecdotes(props.filter.filterString, props.anecdotes)
@@ -11,7 +11,6 @@ const AnecdoteList = (props) => {
     const voteHandler = (value) => (event) => {
         console.log('like handler event' + event)
         props.vote(value)
-        props.sort()
         makeNotification('Voted', 'notification_success')
     }
 
@@ -55,7 +54,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     vote,
-    sort,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)
