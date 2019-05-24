@@ -4,8 +4,6 @@ import {
     Route, Link, Redirect, withRouter
 } from 'react-router-dom'
 
-import AnecdoteList from './components/AnecdoteList'
-
 const Menu = () => {
     const padding = {
         paddingRight: 5
@@ -23,6 +21,26 @@ const Menu = () => {
     )
 }
 
+const AnecdoteList = ({ anecdotes }) => (
+    <div>
+        <h2>Anecdotes</h2>
+        <ul>
+            {anecdotes.map(anecdote =>
+                <li key={anecdote.id} >
+                    <Link to={`/anecdotes/${anecdote.id}`}>
+                        {anecdote.content}
+                    </Link>
+                </li>)}
+        </ul>
+    </div>
+)
+const Anecdote = ({ anecdote }) => (
+    <div>
+        <h2>{anecdote.content}</h2>
+        <div>{anecdote.author}</div>
+        <div>{anecdote.info}</div>
+    </div>
+)
 
 const About = () => (
     <div>
@@ -46,11 +64,18 @@ const Footer = () => (
   </div>
 )
 
-const CreateNew = (props) => {
+const Notification = ({ message }) => {
+    return (
+        <div className='notification'>
+            {message}
+        </div>
+    )
+}
+
+const CreateNew = withRouter((props) => {
     const [content, setContent] = useState('')
     const [author, setAuthor] = useState('')
     const [info, setInfo] = useState('')
-
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -60,6 +85,11 @@ const CreateNew = (props) => {
             info,
             votes: 0
         })
+        props.makeNotification('anecdote added')
+        setContent('')
+        setAuthor('')
+        setInfo('')
+        props.history.push(`/anecdotes`)
     }
 
     return (
@@ -80,10 +110,10 @@ const CreateNew = (props) => {
                 </div>
                 <button>create</button>
             </form>
+
         </div>
     )
-
-}
+})
 
 const App = () => {
     const [anecdotes, setAnecdotes] = useState([
@@ -102,8 +132,17 @@ const App = () => {
             id: '2'
         }
     ])
-
     const [notification, setNotification] = useState('')
+
+    const makeNotification = (message) => {
+        console.log(message)
+        setNotification(message)
+        console.log(notification)
+        setTimeout(() => {
+            console.log('notification removed')
+            setNotification('')
+        }, 10000)
+    }
 
     const addNew = (anecdote) => {
         anecdote.id = (Math.random() * 10000).toFixed(0)
@@ -133,14 +172,25 @@ const App = () => {
             <Router>
                 <div>
                     <h1>Software anecdotes</h1>
+                    <Notification message={notification} />
                     <div>
                         <Link style={padding} to="/anecdotes">anecdotes</Link>
                         <Link style={padding} to="/create">create new</Link>
                         <Link style={padding} to="/about">about</Link>
                     </div>
-                    <Route path="/anecdotes" render={() => <AnecdoteList anecdotes={anecdotes} />} />
-                    <Route path="/about" render={() => <About />} />
-                    <Route path="/create" render={() => <CreateNew addNew={addNew} />} />
+
+                    <Route exact path="/anecdotes" render={() =>
+                        <AnecdoteList anecdotes={anecdotes} />
+                    } />
+                    <Route exact path="/anecdotes/:id" render={({ match }) =>
+                        <Anecdote anecdote={anecdoteById(match.params.id)} />
+                    } />
+                    <Route path="/about" render={() =>
+                        <About />
+                    } />
+                    <Route path="/create" render={() =>
+                        <CreateNew addNew={addNew} makeNotification={makeNotification} />
+                    } />
                     <Footer />
                 </div>
             </Router>
