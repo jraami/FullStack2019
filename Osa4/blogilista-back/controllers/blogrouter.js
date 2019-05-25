@@ -128,10 +128,11 @@ blogRouter.delete('/', async (request, response) => {
 })
 
 blogRouter.put('/:id', async (request, response) => {
+    //console.log(request)
     const id = request.params.id
     try {
-        //
-        console.log('liking' + JSON.stringify(request))
+        //console.log('heiiii')
+        //console.log('liking' + JSON.stringify(request))
         const withoutLikes = await Blog
             .findById(id)
         console.log('entry before ' + withoutLikes)
@@ -151,6 +152,7 @@ blogRouter.put('/:id', async (request, response) => {
         }
     }
     catch (exception) {
+        console.log(exception)
         response.status(400).send({ error: exception })
     }
 })
