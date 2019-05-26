@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { makeNotification } from './Notification'
+
 import InputField from '../components/InputField'
 
 const AddBlogForm = (props) => {
@@ -27,16 +29,10 @@ const AddBlogForm = (props) => {
             inputField.title.value = ''
             inputField.author.value = ''
             inputField.url.value = ''
-
-            if (post) {
-                console.log(post)
-                //this.setNotification(`Added entry to list.`, 'notification_success')
-                //this.blogFormRef.current.toggleVisibility()
-            }
+            makeNotification('Anecdote created', 'notification_success')
         } catch (error) {
-            //console.log(error.response.data.error)
+            makeNotification(error.message, 'notification_success')
             console.log(error)
-            //this.setNotification(`Couldn't add entry: ` + error, 'notification_failure')
         }
     }
 

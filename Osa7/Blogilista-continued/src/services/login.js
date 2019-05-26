@@ -3,8 +3,15 @@ const baseUrl = 'http://localhost:3002/api'
 
 const login = async (credentials) => {
     console.log('logging in from login.js')
-    const response = await axios.post(baseUrl + "/login", credentials)
-    return response.data
+    try {
+        const response = await axios.post(baseUrl + "/login", credentials)
+        console.log(response)
+        return response.data
+    }
+    catch (error) {
+        console.log(error)
+        return error
+    }
 }
 const logout = async () => {
     console.log('logging out from login.js')

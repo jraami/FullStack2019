@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { deleteBlog } from '../reducers/blogReducer'
 
 const Blog = (props) => {
     const username = () => {
-        if (props.login.username == props.blog.userId.username) {
+        if (props.login.username === props.blog.userId.username) {
             return ('you')
         }
         else {
-            return (props.blog.userId.username)
+            return (props.blog.userId.name)
         }
     }
 
@@ -24,7 +24,21 @@ const Blog = (props) => {
 
     const deleteButton = () => {
         if (props.login.username === props.blog.userId.username) {
-            return (<div><button onClick={(event) => handleDelete(props.blog, event)}>Delete</button> <br /></div>)
+            return (
+                <div>
+                    <button onClick={(event) => handleDelete(props.blog, event)}>Delete
+                    </button>
+                    <br />
+                </div>
+            )
+        }
+    }
+
+    const likeButton = () => {
+        if (props.login.name) {
+            return (
+                <button onClick={props.handleClick} >Like
+                </button>)
         }
     }
 
@@ -32,7 +46,7 @@ const Blog = (props) => {
         <div>
             <div><b>{props.blog.title}</b> by {props.blog.author}<br />
                 <a href={props.blog.url}>{props.blog.url}</a><br />
-                {props.blog.likes} likes <button className="likebutton" onClick={props.handleClick} >Like</button><br />
+                {props.blog.likes} likes {likeButton()}<br />
                 Added by {username()}.<br />
                 {deleteButton()}<br />
             </div>

@@ -8,7 +8,7 @@ const loginReducer = (state = [], action) => {
             return action.data
 
         case 'LOGOUT':
-            return action.data
+            return []
 
         case 'TOKEN':
             return action.data
@@ -19,27 +19,19 @@ const loginReducer = (state = [], action) => {
 
 // Action creators
 
-/*
-    
-            this.setNotification('Login successful', 'notification_success')
-          
-        } catch (error) {
-            this.setNotification('Error: ' + error.response.data.error, 'notification_failure')
-        }
-    }
-*/
 export const loginAction = (credentials) => {
     return async dispatch => {
-        try {
-            const user = await loginService.login(credentials)
-            dispatch({
-                type: 'LOGIN',
-                data: user
-            })
+        const user = await loginService.login(credentials)
+        dispatch({
+            type: 'LOGIN',
+            data: user
+        })
+        if (user.response) {
+            return (user.response.status)
+        }
+        else {
             blogService.setToken(user.token)
             window.localStorage.setItem('BlogUser', JSON.stringify(user))
-        } catch (error) {
-            console.log(error)
         }
     }
 }
@@ -50,26 +42,8 @@ export const logoutAction = () => {
         dispatch({
             type: 'LOGOUT'
         })
-    }
-}
-
-export const checkXXLogin = () => {
-    const loggedUserJSON = window.localStorage.getItem('BlogUser')
-    if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
-        if (!user) {
-            return async dispatch => {
-                try {
-                    const user = await blogService.setToken(user.token)
-                    dispatch({
-                        type: 'TOKEN',
-                        data: user
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
+        blogService.setToken(null)
+        localStorage.setItem("BlogUser", null)
     }
 }
 
@@ -86,6 +60,5 @@ export const checkLogin = (userJSON) => {
         }
     }
 }
-
 
 export default loginReducer

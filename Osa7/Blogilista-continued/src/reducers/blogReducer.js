@@ -1,15 +1,5 @@
 import blogService from '../services/blogs'
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-    return {
-        content: anecdote,
-        //      id: getId(),
-        votes: 0
-    }
-}
-
 const sortByLikes = (listToBeSorted) => {
     const sortedList = listToBeSorted.sort((a, b) => {
         if (a.likes < b.likes) return 1
@@ -64,8 +54,17 @@ export const initializeBlogs = () => {
 
 export const createBlog = content => {
     return async dispatch => {
-        const newBlog = await blogService.post(content)
+        let newBlog = await blogService.post(content)
         console.log(content)
+        const user = JSON.parse(window.localStorage.getItem('BlogUser'))
+        newBlog = {
+            ...newBlog,
+            userId: {
+                _id: newBlog.userId,
+                username: user.username,
+                name: user.name
+            }
+        }
         console.log(newBlog)
         dispatch({
             type: 'NEW_BLOG',
