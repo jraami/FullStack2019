@@ -43,13 +43,11 @@ const Blog = (props) => {
     }
 
     return (
-        <div>
-            <div><b>{props.blog.title}</b> by {props.blog.author}<br />
-                <a href={props.blog.url}>{props.blog.url}</a><br />
-                {props.blog.likes} likes {likeButton()}<br />
-                Added by {username()}.<br />
-                {deleteButton()}<br />
-            </div>
+        <div><b>{props.blog.title}</b> by {props.blog.author}<br />
+            <a href={props.blog.url}>{props.blog.url}</a><br />
+            {props.blog.likes} likes {likeButton()}<br />
+            Added by {username()}.<br />
+            {deleteButton()}
         </div>
     )
 }

@@ -15,7 +15,7 @@ const BlogList = (props) => {
 
     return (
         <div>
-            <h2>Blogs:</h2>
+            <h2>Blogs</h2>
             {props.blogs.map(blog =>
                 <Blog key={blog.id} blog={blog} handleClick={likeHandler(blog.id)} />)
             }
