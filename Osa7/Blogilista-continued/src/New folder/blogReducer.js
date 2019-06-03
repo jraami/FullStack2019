@@ -21,14 +21,6 @@ const blogReducer = (state = [], action) => {
             console.log(concatenatedList)
             return concatenatedList
 
-        case 'COMMENT':
-            const blogToComment = state.find(n => n.id === action.data.commentId)
-            const commentedBlog = {
-                ...blogToComment,
-                comments: action.data.commentContent
-            }
-            return state.map(entry => entry.id !== action.data.blogToComment ? entry : commentedBlog)
-
         case 'LIKE':
             const likeId = action.data.likeId
             const blogToChange = state.find(n => n.id === likeId)
@@ -83,26 +75,12 @@ export const createBlog = content => {
     }
 }
 
-export const comment = blogComment => {
-    const commentId = blogComment.id
-    const commentContent = blogComment.comment
-    console.log(blogComment)
-    return async dispatch => {
-        await blogService.comment(commentId, commentContent)
-        dispatch({
-            type: 'COMMENT',
-            data: {
-                commentId,
-                commentContent
-            }
-        })
-    }
-}
-
 export const like = blogToLike => {
+    console.log(blogToLike)
     return async dispatch => {
         const likeId = blogToLike.id
-        await blogService.like(likeId)
+        const votedBlog = await blogService.like(likeId)
+        console.log(votedBlog)
         dispatch({
             type: 'LIKE',
             data: { likeId }
@@ -111,15 +89,14 @@ export const like = blogToLike => {
 }
 
 export const deleteBlog = blogToDelete => {
+    console.log(blogToDelete)
     return async dispatch => {
-        await blogService.remove(blogToDelete)
+        const deletedBlog = await blogService.remove(blogToDelete)
         dispatch({
             type: 'DELETE',
             data: { id: blogToDelete.id }
         })
     }
 }
-
-
 
 export default blogReducer

@@ -21,11 +21,12 @@ const post = async (newObject) => {
 }
 
 const comment = async (id, comment) => {
+    console.log(comment)
     const config = {
-        headers: { 'Authorization': token },
-        body: { 'comment': comment }
+        'comment': comment
     }
     const response = await axios.put(baseUrl + '/' + id + '/comments', config)
+    return response.data
 }
 
 const like = async (id) => {
@@ -44,4 +45,4 @@ const remove = async (object) => {
     return response.data
 }
 
-export default { getAll, post, like, remove, setToken }
+export default { getAll, post, like, remove, comment, setToken }

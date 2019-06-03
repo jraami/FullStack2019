@@ -23,11 +23,8 @@ const blogReducer = (state = [], action) => {
 
         case 'COMMENT':
             const blogToComment = state.find(n => n.id === action.data.commentId)
-            const commentedBlog = {
-                ...blogToComment,
-                comments: action.data.commentContent
-            }
-            return state.map(entry => entry.id !== action.data.blogToComment ? entry : commentedBlog)
+            blogToComment.comments.push(action.data.commentContent)
+            return state.map(entry => entry.id === action.data.commentId ? blogToComment : entry)
 
         case 'LIKE':
             const likeId = action.data.likeId
@@ -84,7 +81,7 @@ export const createBlog = content => {
 }
 
 export const comment = blogComment => {
-    const commentId = blogComment.id
+    const commentId = blogComment.thisId
     const commentContent = blogComment.comment
     console.log(blogComment)
     return async dispatch => {

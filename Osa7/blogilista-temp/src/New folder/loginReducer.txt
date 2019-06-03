@@ -1,0 +1,89 @@
+import blogService from '../services/blogs'
+
+/*
+const getId = () => (100000 * Math.random()).toFixed(0)
+
+const asObject = (anecdote) => {
+    return {
+        content: anecdote,
+        //      id: getId(),
+        votes: 0
+    }
+}
+
+const sortByLikes = (listToBeSorted) => {
+    const sortedList = listToBeSorted.sort((a, b) => {
+        if (a.likes < b.likes) return 1
+        if (a.likes > b.likes) return -1
+        return 0
+    })
+    return sortedList
+}
+
+const blogReducer = (state = [], action) => {
+    switch (action.type) {
+
+        case 'INIT_BLOGS':
+            const initializedBlogs = sortByLikes(action.data)
+            return initializedBlogs
+
+        case 'NEW_BLOG':
+            const concatenatedList = state.concat(asObject(action.data.content))
+            console.log(concatenatedList)
+            return concatenatedList
+
+        case 'LIKE':
+            console.log('liking ' + action.data.id)
+            const id = action.data.id
+            const blogToChange = state.find(n => n.id === id)
+            const blog = {
+                ...blogToChange,
+                likes: blogToChange.likes + 1
+            }
+            const newState = state.map(entry => entry.id !== id ? entry : blog)
+
+            return sortByLikes(newState)
+
+        default:
+            return state
+    }
+}
+
+// Action creators
+
+export const initializeBlogs = () => {
+    return async dispatch => {
+        const blogs = await blogService.getAll()
+        dispatch({
+            type: 'INIT_BLOGS',
+            data: blogs
+        })
+    }
+}
+
+export const createBlog = content => {
+    return async dispatch => {
+        const newBlog = await blogService.post(content)
+        dispatch({
+            type: 'NEW_BLOG',
+            data: {
+                content
+            }
+        })
+    }
+}
+
+
+export const like = id => {
+    console.log(id)
+    return async dispatch => {
+        const votedBlog = await blogService.like(id)
+        console.log(votedBlog)
+        dispatch({
+            type: 'LIKE',
+            data: { id }
+        })
+    }
+}
+*/
+export default loginReducer
