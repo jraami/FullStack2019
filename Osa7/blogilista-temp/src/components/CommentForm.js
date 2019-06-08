@@ -6,6 +6,7 @@ import { comment } from '../reducers/blogReducer'
 import { makeNotification } from './Notification'
 
 import InputField from '../components/InputField'
+import Button from '@material-ui/core/Button'
 
 const CommentForm = (props) => {
 
@@ -29,8 +30,8 @@ const CommentForm = (props) => {
     return (
         <div>
             <form onSubmit={addComment} >
-                <InputField name="comment" text="Title: " type="text" />
-                <button type="submit">Submit</button>
+                <InputField name="comment" text="Add your comment: " type="text" />
+                <Button variant='contained' type="submit">Submit</Button>
             </form >
             <br />
         </div>

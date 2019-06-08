@@ -2,22 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { createBlog } from '../reducers/blogReducer'
-
 import { makeNotification } from './Notification'
 
-import InputField from '../components/InputField'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 const AddBlogForm = (props) => {
 
-    /*
-    const newAnecdoteHandler = async (event) => {
-        event.preventDefault()
-        const content = event.target.anecdoteInput.value
-        event.target.anecdoteInput.value = ''
-        props.anecdoteCreation(content)
-        makeNotification('Anecdote created', 'notification_success'
-    }
-*/
 
     const submitNew = async (event) => {
         event.preventDefault()
@@ -40,14 +32,36 @@ const AddBlogForm = (props) => {
 
     return (
         <div>
-            Add a blog to list: <br />
+            <Typography variant='h2' gutterBottom>
+                Add a blog
+            </Typography>
             <form onSubmit={submitNew} >
-                <InputField name="title" text="Title: " type="text" />
-                <InputField name="author" text="Author's name: " type="text" />
-                <InputField name="url" text="URL: " type="text" />
-                <button type="submit">Submit</button>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    id="title"
+                    label="Title"
+                    name="title"
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    id="author"
+                    label="Author"
+                    name="author"
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    id="url"
+                    label="Url"
+                    name="url"
+                />
+                <Button variant='contained' type="submit">Submit</Button>
             </form >
-            <br />
         </div>
     )
 }

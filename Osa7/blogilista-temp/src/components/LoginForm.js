@@ -4,6 +4,9 @@ import { loginAction, logoutAction } from '../reducers/loginReducer'
 import { makeNotification } from './Notification'
 
 import InputField from './InputField'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 const LoginForm = (props) => {
     // TÄSTÄ ALEMMASTA ASYNC TRY JOS TOIMII
@@ -41,31 +44,41 @@ const LoginForm = (props) => {
     }
     const loginForm = () => (
         <div>
-            <h2>Login</h2>
-
             <form onSubmit={loginHandler}>
-                <div>
-                    <InputField text="Username: " name="username" />
-                </div>
-                <div>
-                    <InputField text="Password: " name="password" />
-                </div>
-                <button type="submit">Submit</button>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                    autoFocus
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                />
+                <Button variant="outlined" type="submit">Submit</Button>
             </form>
         </div>
     )
     const logoutForm = () => (
         <div>
-            <p>
-                {props.login.name} logged in.<br />
-                <button name="logout" onClick={logoutHandler}>Log out</button>
-            </p>
-        </div>
+        </div >
 
     )
 
     return (
-        props.login.name ? logoutForm() : loginForm()
+        props.login.name ? null : loginForm()
     )
 }
 

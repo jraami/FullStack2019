@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import CommentForm from './CommentForm'
 import Comment from './Comment'
@@ -9,7 +10,34 @@ import { deleteBlog } from '../reducers/blogReducer'
 import { like } from '../reducers/blogReducer'
 import { makeNotification } from './Notification'
 
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+
+    cardGrid: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(8),
+    },
+    card: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    cardMedia: {
+        paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+        flexGrow: 1
+    }
+}))
+
 const BlogView = withRouter((props) => {
+    const classes = useStyles()
     const blog = props.blogs.find(a => a.id === props.id)
     console.log(props)
     console.log(blog)
@@ -51,8 +79,8 @@ const BlogView = withRouter((props) => {
         if (props.login.username === blog.userId.username) {
             return (
                 <div>
-                    <button onClick={(event) => handleDelete(blog, event)}>Delete this entry
-                    </button>
+                    <Button variant='contained' onClick={(event) => handleDelete(blog, event)}>Delete this entry
+                    </Button>
                     <br />
                 </div>
             )
@@ -62,8 +90,8 @@ const BlogView = withRouter((props) => {
     const likeButton = () => {
         if (props.login.name) {
             return (
-                <button onClick={(event) => handleLike(blog, event)}>Like
-                </button>)
+                <Button variant='contained' onClick={(event) => handleLike(blog, event)}>Like
+                </Button>)
         }
     }
 
@@ -78,21 +106,41 @@ const BlogView = withRouter((props) => {
         } else {
             return (
                 <div>
-                    No comments yet.
-               </div>
+                    <Typography variant='overline'>
+                        No comments yet.
+                    </Typography>
+                </div>
             )
         }
     }
 
     return (
-        <div><h2>{blog.title} by {blog.author}</h2><br />
-            <a href={blog.url}>{blog.url}</a><br />
-            {blog.likes} likes {likeButton()}<br />
-            <i>Added by {username()}.</i><br />
-            {deleteButton()}
-            <h3>Comments</h3>
+        <div>
+            <Card className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                    <Typography variant="h5" component="h2">
+                        {blog.title}
+                    </Typography>
+                    <Typography variant="overline" gutterBottom>
+                        by {blog.author}<br />
+                    </Typography>
+                    <Typography variant="subtitle" gutterBottom>
+                        added by <Link to={`/userlist/${blog.userId._id}`}>{username()}</Link><br />
+                        visit at <a href={blog.url} style={{ textDecoration: 'none' }}>{blog.url}</a><br />
+                        {blog.likes} likes<br />
+                    </Typography>
+
+                    <CardActions>
+                        {deleteButton()}
+                        {likeButton()}
+                    </CardActions>
+                </CardContent>
+            </Card>
+            <br />
+            <Typography variant='h6' gutterBottom>
+                Comments
+            </Typography>
             {listComments()}
-            Add your comment:
             <CommentForm id={blog.id} />
         </div>
     )

@@ -1,10 +1,13 @@
 import React from 'react'
+import Typography from '@material-ui/core/Typography'
 
 const Comment = ({ comment }) => {
 
     return (
         <div>
-            {comment}
+            <Typography variant='overline'>
+                {comment}
+            </Typography>
         </div>
     )
 }

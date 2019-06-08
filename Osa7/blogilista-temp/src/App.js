@@ -7,8 +7,11 @@ import { connect } from 'react-redux'
 
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
-
 import { checkLogin } from './reducers/loginReducer'
+
+import AppBar from '@material-ui/core/AppBar'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { makeStyles } from '@material-ui/core/styles'
 
 import Menu from './components/Menu'
 import LoginForm from './components/LoginForm'
@@ -19,8 +22,65 @@ import BlogView from './components/BlogView'
 import AddBlogForm from './components/AddBlogForm'
 import Notification from './components/Notification'
 
-const App = (props) => {
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles(theme => ({
+    '@global': {
+        body: {
+            backgroundColor: theme.palette.common.white,
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    icon: {
+        marginRight: theme.spacing(2),
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+    notification_none: {
+        color: 'black',
+        backgroundColor: 'none'
+        
+    },
+    notification_success: {
+        color: 'green',
+        backgroundColor: '#555555'
+    },
+    notification_failure: {
+        color: 'red',
+        backgroundColor: 'blue'
+    },
+}))
+
+const App = (props) => {
+    const classes = useStyles()
     // INIT AND CHECK FOR EXISTING TOKEN
 
     useEffect(() => {
@@ -34,14 +94,10 @@ const App = (props) => {
         }
     }, [])
 
-    return (
-        <div>
-            <Router>
+    const loggedInRender = () => {
+        if (props.login.token) {
+            return (
                 <div>
-                    <Notification />
-                    <Menu />
-                    <LoginForm />
-
                     <Route exact path="/" render={() =>
                         <BlogList />
                     } />
@@ -62,14 +118,40 @@ const App = (props) => {
                         <BlogView id={match.params.id} />
                     } />
                 </div>
-            </Router>
-        </div>
+            )
+        }
+        else {
+            return null
+        }
+    }
+
+    return (
+        <Container component="main">
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Router>
+                    <Container component="header">
+                        <Notification />
+                        <Menu classes={classes} />
+                    </Container>
+                    <Container component="div">
+                        <div>
+                            <div>
+                                <LoginForm />
+                                {loggedInRender()}
+                            </div>
+                        </div>
+                    </Container>
+                </Router>
+            </div>
+        </Container>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        login: state.login
     }
 }
 
