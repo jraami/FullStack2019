@@ -13,13 +13,15 @@ const NotificationBadge = styled.div`
     padding: 0.25em 1em;
     `
 const NotificationFailure = styled(NotificationBadge)`
-    background-color: crimson;
-    border: 2px solid darkred;
+    color: mediumvioletred;
+    background-color: pink;
+    border: 1px solid mediumvioletred;
     border-radius: 3px;
     `
 const NotificationSuccess = styled(NotificationBadge)`
-    background-color: seagreen;
-    border: 2px solid darkgreen;
+    color: green;
+    background-color: palegreen;
+    border: 1px solid green;
     border-radius: 3px;
     `
 
