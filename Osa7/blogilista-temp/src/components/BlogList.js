@@ -3,10 +3,6 @@ import { connect } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 
@@ -52,27 +48,27 @@ const BlogList = (props) => {
     }
 
     return (
-    <div>  
-        <div className={classes.heroContent}>
-            <Container maxWidth="sm">
-            <Typography variant="h1">
-                Blogs
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              This is a list - the best list in the world.
-            </Typography>
-            </Container>
-        </div>
+        <div>  
+            <div className={classes.heroContent}>
+                <Container maxWidth="sm">
+                    <Typography variant="h1">
+                    Blogs
+                    </Typography>
+                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    This is a list - the best list in the world.
+                    </Typography>
+                </Container>
+            </div>
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
-            {props.blogs.map(blog =>
-                <Grid item key={blog} xs={12} sm={6} md={4}>
-                <Blog key={blog.id} blog={blog} handleClick={likeHandler(blog.id)} />
+                    {props.blogs.map(blog =>
+                        <Grid item key={blog} xs={12} sm={6} md={4}>
+                            <Blog key={blog.id} blog={blog} handleClick={likeHandler(blog.id)} />
+                        </Grid>
+                    )}
                 </Grid>
-            )}
-            </Grid>
             </Container>
-    </div>
+        </div>
     )
 }
 

@@ -37,7 +37,7 @@ const User = (props) => {
                         </Typography>
                         <Typography>
                             {props.user.entries.length} entries
-                    </Typography>
+                        </Typography>
                     </CardContent>
                 </Card>
             </Link>

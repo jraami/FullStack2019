@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button'
 
 const AddBlogForm = (props) => {
 
-
     const submitNew = async (event) => {
         event.preventDefault()
         try {
@@ -26,7 +25,6 @@ const AddBlogForm = (props) => {
             makeNotification('Blog created', 'notification_success')
         } catch (error) {
             makeNotification(error.message, 'notification_failure')
-            console.log(error)
         }
     }
 

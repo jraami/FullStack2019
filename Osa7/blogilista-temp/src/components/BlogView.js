@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
 const BlogView = withRouter((props) => {
     const classes = useStyles()
     const blog = props.blogs.find(a => a.id === props.id)
-    console.log(props)
-    console.log(blog)
     if (blog === undefined) { return null }
 
     const username = () => {
@@ -57,20 +55,18 @@ const BlogView = withRouter((props) => {
         try {
             props.deleteBlog(blogToBeDeleted)
             makeNotification('Blog deleted', 'notification_success')
-            props.history.push(`/`)
+            props.history.push('/')
         } catch (exception) {
             makeNotification('Delete was not successful: ' + exception)
-            console.log(exception)
         }
     }
 
     const handleLike = async (blogToBeLiked, event) => {
         event.preventDefault()
         try {
-            console.log(blogToBeLiked)
             props.like(blogToBeLiked)
         } catch (exception) {
-            console.log(exception)
+            return (exception)
         }
     }
 

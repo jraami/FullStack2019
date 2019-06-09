@@ -31,7 +31,6 @@ const UserView = (props) => {
 
     const user = props.users.find(a => a.id === props.id)
     if (user === undefined) { return null }
-    console.log(user)
     return (
         <div>
             <Card className={classes.card}>

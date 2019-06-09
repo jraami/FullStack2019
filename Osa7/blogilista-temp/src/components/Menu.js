@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import AppBar from '@material-ui/core/AppBar'
-import Button from '@material-ui/core/Button'
 
 const Menu = (props) => {
 

@@ -19,9 +19,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    cardMedia: {
-        paddingTop: '56.25%', // 16:9
-    },
     cardContent: {
         flexGrow: 1
     }
@@ -53,7 +50,7 @@ const Blog = (props) => {
                         </Typography>
                         <Typography>
                             {props.blog.likes} likes, {props.blog.comments.length} comments
-                    </Typography>
+                        </Typography>
                     </CardContent>
                 </Card>
             </Link>

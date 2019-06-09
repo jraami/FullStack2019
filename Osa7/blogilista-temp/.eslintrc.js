@@ -3,7 +3,10 @@ module.exports = {
         'browser': true,
         'es6': true
     },
-    'extends': 'eslint:recommended',
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended'
+    ],
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
@@ -20,9 +23,8 @@ module.exports = {
     ],
     'rules': {
         'indent': [
-            2,
-            tab,
-            { 'switchCase': 1 }
+            'error',
+            4
         ],
         'linebreak-style': [
             'error',
@@ -36,10 +38,8 @@ module.exports = {
             'error',
             'never'
         ],
-        'extends': [
-            'eslint:recommended',
-            'plugin:react/recommended'
-        ],
-        'no-unused-vars': 0
+        'react/prop-types': 0,
+        'no-case-declarations': 0,
+        'no-unused-vars': 0,
     }
 }

@@ -29,7 +29,7 @@ const UserList = (props) => {
                 <Container maxWidth="sm">
                     <Typography variant="h3">
                         Users
-            </Typography>
+                    </Typography>
                 </Container>
             </div>
             <Container className={classes.cardGrid} maxWidth="md">

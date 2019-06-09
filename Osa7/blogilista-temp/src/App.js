@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {
     BrowserRouter as Router,
-    Route, Link, Redirect, withRouter
+    Route,
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -9,7 +9,6 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { checkLogin } from './reducers/loginReducer'
 
-import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -22,18 +21,7 @@ import BlogView from './components/BlogView'
 import AddBlogForm from './components/AddBlogForm'
 import Notification from './components/Notification'
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -162,4 +150,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-

@@ -11,32 +11,30 @@ const sortByLikes = (listToBeSorted) => {
 
 const blogReducer = (state = [], action) => {
     switch (action.type) {
+    case 'INIT_BLOGS':
+        const initializedBlogs = sortByLikes(action.data)
+        return initializedBlogs
 
-        case 'INIT_BLOGS':
-            const initializedBlogs = sortByLikes(action.data)
-            return initializedBlogs
+    case 'NEW_BLOG':
+        const concatenatedList = state.concat(action.data.newBlog)
+        return concatenatedList
 
-        case 'NEW_BLOG':
-            const concatenatedList = state.concat(action.data.newBlog)
-            console.log(concatenatedList)
-            return concatenatedList
+    case 'LIKE':
+        const likeId = action.data.likeId
+        const blogToChange = state.find(n => n.id === likeId)
+        const blog = {
+            ...blogToChange,
+            likes: blogToChange.likes + 1
+        }
+        const newState = state.map(entry => entry.id !== likeId ? entry : blog)
+        return sortByLikes(newState)
 
-        case 'LIKE':
-            const likeId = action.data.likeId
-            const blogToChange = state.find(n => n.id === likeId)
-            const blog = {
-                ...blogToChange,
-                likes: blogToChange.likes + 1
-            }
-            const newState = state.map(entry => entry.id !== likeId ? entry : blog)
-            return sortByLikes(newState)
+    case 'DELETE':
+        const deleteId = action.data.id
+        return state.filter(entry => entry.id !== deleteId)
 
-        case 'DELETE':
-            const deleteId = action.data.id
-            return state.filter(entry => entry.id !== deleteId)
-
-        default:
-            return state
+    default:
+        return state
     }
 }
 
@@ -55,7 +53,6 @@ export const initializeBlogs = () => {
 export const createBlog = content => {
     return async dispatch => {
         let newBlog = await blogService.post(content)
-        console.log(content)
         const user = JSON.parse(window.localStorage.getItem('BlogUser'))
         newBlog = {
             ...newBlog,
@@ -65,7 +62,6 @@ export const createBlog = content => {
                 name: user.name
             }
         }
-        console.log(newBlog)
         dispatch({
             type: 'NEW_BLOG',
             data: {
@@ -76,11 +72,9 @@ export const createBlog = content => {
 }
 
 export const like = blogToLike => {
-    console.log(blogToLike)
     return async dispatch => {
         const likeId = blogToLike.id
         const votedBlog = await blogService.like(likeId)
-        console.log(votedBlog)
         dispatch({
             type: 'LIKE',
             data: { likeId }
@@ -89,7 +83,6 @@ export const like = blogToLike => {
 }
 
 export const deleteBlog = blogToDelete => {
-    console.log(blogToDelete)
     return async dispatch => {
         const deletedBlog = await blogService.remove(blogToDelete)
         dispatch({

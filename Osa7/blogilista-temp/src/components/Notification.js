@@ -24,7 +24,6 @@ const NotificationSuccess = styled(NotificationBadge)`
     `
 
 export const makeNotification = (message, displayStyle) => {
-    console.log('hellooo')
     componentProps.setNotification(message, displayStyle)
     setTimeout(() => {
         componentProps.resetNotification()
@@ -35,18 +34,18 @@ const Notification = (props) => {
     componentProps = props
     const displayNotification = () => {
         switch (props.notification.displayStyle) {
-            case 'notification_success':
-                return (
-                    <NotificationSuccess>
-                        {props.notification.message}
-                    </NotificationSuccess>
-                )
-            case 'notification_failure':
-                return (
-                    <NotificationFailure>
-                        {props.notification.message}
-                    </NotificationFailure>
-                )
+        case 'notification_success':
+            return (
+                <NotificationSuccess>
+                    {props.notification.message}
+                </NotificationSuccess>
+            )
+        case 'notification_failure':
+            return (
+                <NotificationFailure>
+                    {props.notification.message}
+                </NotificationFailure>
+            )
         }
     }
     return (
